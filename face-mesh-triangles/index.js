@@ -31,10 +31,7 @@ async function loadFaceLandmarkDetectionModel() {
 
 async function renderPrediction() {
     const predictions = await model.estimateFaces({
-        input: video,
-        returnTensors: false,
-        flipHorizontal: false,
-        predictIrises: false
+        input: video
     });
 
     ctx.drawImage(
@@ -46,13 +43,13 @@ async function renderPrediction() {
     //displayKeypoints(predictions);
 
     //Draw triangle mesh using the indexes provided by Google for triangulation
-    //connectKeypointsToDrawTriangle(predictions);
+    connectKeypointsToDrawTriangle(predictions);
 
     //Display dots on the outline of the face
     //drawFaceOutline(predictions);
 
     //Display dots on the outline of both eyes
-    drawEyesOutline(predictions);
+    //drawEyesOutline(predictions);
 
     window.requestAnimationFrame(renderPrediction);
 }
@@ -74,9 +71,8 @@ function displayKeypoints(predictions) {
 }
 
 function connectKeypointsToDrawTriangle(predictions) {
-    //ctx.strokeStyle = "black";
-    //ctx.fillStyle = "black";
-    ctx.lineWidth = 0;
+    //ctx.strokeStyle = "grey";
+    ctx.fillStyle = "grey";
     if(predictions.length > 0) {
         predictions.forEach(prediction => {
             const keypoints = prediction.scaledMesh;
